@@ -66,11 +66,8 @@ class ConnectedShopping extends React.Component{
 								{this.renderListItem(item)}
 							</li>
 						)
-
-
 					})}
 				</ul>
-
 			</div>
 		)
 	}
