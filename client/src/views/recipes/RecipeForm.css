@@ -1,3 +1,15 @@
 .AddButton {
 	float:right;
 }
+
+.ItemList {
+	vertical-align: middle;
+	background: #D3D0CB;
+
+}
+
+.RemoveItemButton {
+	font-weight:bold;
+	cursor: pointer;
+	color: #FF0000;
+}

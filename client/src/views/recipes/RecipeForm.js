@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { addRecipe } from '../../js/actions/index';
 
 import _ from 'lodash';
-import { FormGroup, ControlLabel, FormControl, Form, Button, ListGroup, ListGroupItem, Col, Row, Grid } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Button, ListGroup, ListGroupItem, Col, Row } from 'react-bootstrap';
+
 
 
 const mapDispatchToProps = dispatch => {
@@ -41,7 +42,6 @@ class ConnectedRecipeForm extends React.Component{
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		//this.handleDismiss = this.handleDismiss.bind(this);
 
 		this.addIngredient = this.addIngredient.bind(this);
 		this.removeIngredient = this.removeIngredient.bind(this);
@@ -51,21 +51,6 @@ class ConnectedRecipeForm extends React.Component{
 		this.setState({
 			[e.target.id]: e.target.value
 		})
-
-		console.log(e.target.id)
-
-		// if(e.target.id === "title"){
-
-		// 	const existing = _.map(this.props.recipe, (recipe) => {
-		// 		return recipe.title;
-		// 	})
-
-		// 	this.setState({
-		// 		isValid: {
-		// 			title:_.includes(existing, e.target.value) || e.target.value === ""
-		// 		}
-		// 	})
-		// }
 	}
 
 	handleSubmit(e){
@@ -109,10 +94,12 @@ class ConnectedRecipeForm extends React.Component{
 	}
 
 	removeIngredient(e){
-		let removed = _.remove(this.state.ingredients, arg => {
+		console.log(e.target.id);
 
+		let removed = _.remove(this.state.ingredients, arg => {
 			return arg.name !== e.target.id;
 		})
+
 		this.setState({
 			ingredients: removed
 		})
@@ -146,16 +133,19 @@ class ConnectedRecipeForm extends React.Component{
 						{this.state.ingredients.map(ing => {
 							return (
 								<ListGroupItem key={ing.name}>
+								<Row>
 									<Col xs={10}>
 											{ing.name}
 									</Col>
-									<Col>
-										<Button className="ItemButton"
-												id={ing.name}
-												onClick={this.removeIngredient}>
-											Remove
-										</Button>
+									<Col xs={2} className="RemoveItemButton" id={ing.name} onClick={this.removeIngredient}>
+										<div id={ing.name} >
+											X
+										</div>
 									</Col>
+								</Row>
+
+
+
 								</ListGroupItem>
 
 							)
@@ -170,23 +160,13 @@ class ConnectedRecipeForm extends React.Component{
 							<ControlLabel>Add Ingredient</ControlLabel>
 							<FormControl type="text" placeholder="Enter ingredient" onChange={this.handleChange} xs={8}/>
 
-							<Button onClick={this.addIngredient}>+</Button>
+
 						</FormGroup>
 
-
-
-
-
-
-
-
-
-
-
-
 			</form>
+				<Button onClick={this.addIngredient}>Add Ingredient</Button>
 				<div className="AddButton">
-					<Button onClick={this.handleSubmit}>Add</Button>
+					<Button onClick={this.handleSubmit}>Add Recipe</Button>
 				</div>
 
 			</div>
