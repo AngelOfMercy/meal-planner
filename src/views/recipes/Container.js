@@ -70,7 +70,7 @@ class ConnectedContainer extends React.Component{
 									</option>
 								)
 							})}
-							<option value="None">None</option>
+							<option value="None">---</option>
 						</FormControl>
 				</FormGroup>
 			</form>
