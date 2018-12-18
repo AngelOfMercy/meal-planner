@@ -1,20 +1,29 @@
 {
-  "name": "planner",
-  "version": "1.0.0",
-  "description": "A react application to plan meals",
-  "main": "index.js",
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
+    "react-scripts": "2.1.1",
+    "redux": "^4.0.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm install --prefix client"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AngelOfMercy/meal-planner.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "Aran Mason",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AngelOfMercy/meal-planner/issues"
-  },
-  "homepage": "https://github.com/AngelOfMercy/meal-planner#readme"
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
