@@ -22,24 +22,16 @@ class App extends Component {
         </Navbar>
         <Grid>
           <Row>
-            <Col xs={4}>
+            <Col xs={12} md={4}>
               <h1>New Recipe</h1>
-            </Col>
-            <Col xs={4}>
-              <h1>Daily Meals</h1>
-            </Col>
-            <Col xs={4}>
-              <h1>Shopping List</h1>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={4}>
               <RecipeForm></RecipeForm>
             </Col>
-            <Col xs={4}>
+            <Col xs={12} md={4}>
+              <h1>Daily Meals</h1>
               <Planner/>
             </Col>
-            <Col>
+            <Col xs={12} md={4}>
+              <h1>Shopping List</h1>
               <Shopping/>
             </Col>
           </Row>
