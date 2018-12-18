@@ -94,8 +94,6 @@ class ConnectedRecipeForm extends React.Component{
 	}
 
 	removeIngredient(e){
-		console.log(e.target.id);
-
 		let removed = _.remove(this.state.ingredients, arg => {
 			return arg.name !== e.target.id;
 		})
@@ -106,7 +104,6 @@ class ConnectedRecipeForm extends React.Component{
 	}
 
 	getValidity(key){
-		console.log(key)
 		if(this.state[key].length === 0){
 			return null
 		} else if (this.state.isValid[key]) {
@@ -119,51 +116,40 @@ class ConnectedRecipeForm extends React.Component{
 	render(){
 		return (
 			<div className="RecipeForm">
+				<form>
+					<FormGroup controlId="title" validationState={this.getValidity("title")}>
+						<ControlLabel>Recipe Name</ControlLabel>
+						<FormControl type="text"
+								placeholder="Enter name"
+								onChange={this.handleChange}
+								value={this.state.title}/>
+					</FormGroup>
 
-			<form>
-
-				<FormGroup controlId="title" validationState={this.getValidity("title")}>
-					<ControlLabel>Recipe Name</ControlLabel>
-					<FormControl type="text" placeholder="Enter name" onChange={this.handleChange}/>
-				</FormGroup>
-
-				<FormGroup>
-					<ListGroup>
-						{console.log('State: ', this.state)}
-						{this.state.ingredients.map(ing => {
-							return (
-								<ListGroupItem key={ing.name}>
-								<Row>
-									<Col xs={10}>
-											{ing.name}
-									</Col>
-									<Col xs={2} className="RemoveItemButton" id={ing.name} onClick={this.removeIngredient}>
-										<div id={ing.name} >
-											X
-										</div>
-									</Col>
-								</Row>
-
-
-
-								</ListGroupItem>
-
-							)
-						})}
-					</ListGroup>
-
-				</FormGroup>
-
-
-
-						<FormGroup controlId="newIngredient" className="IngredientText">
-							<ControlLabel>Add Ingredient</ControlLabel>
-							<FormControl type="text" placeholder="Enter ingredient" onChange={this.handleChange} xs={8}/>
-
-
-						</FormGroup>
-
-			</form>
+					<FormGroup>
+						<ListGroup>
+							{this.state.ingredients.map(ing => {
+								return (
+									<ListGroupItem key={ing.name}>
+									<Row>
+										<Col xs={10}>
+												{ing.name}
+										</Col>
+										<Col xs={2} className="RemoveItemButton" id={ing.name} onClick={this.removeIngredient}>
+											<div id={ing.name} >
+												X
+											</div>
+										</Col>
+									</Row>
+									</ListGroupItem>
+								)
+							})}
+						</ListGroup>
+					</FormGroup>
+							<FormGroup controlId="newIngredient" className="IngredientText">
+								<ControlLabel>Add Ingredient</ControlLabel>
+								<FormControl type="text" placeholder="Enter ingredient" onChange={this.handleChange} xs={8} value={this.state.newIngredient}/>
+							</FormGroup>
+				</form>
 				<Button onClick={this.addIngredient}>Add Ingredient</Button>
 				<div className="AddButton">
 					<Button onClick={this.handleSubmit}>Add Recipe</Button>
