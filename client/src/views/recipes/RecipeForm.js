@@ -1,10 +1,12 @@
+import './RecipeForm.css'
+
 import React from 'react';
 import { connect } from 'react-redux';
 
 import { addRecipe } from '../../js/actions/index';
 
 import _ from 'lodash';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Button, ListGroup, ListGroupItem, Col, Alert } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Form, Button, ListGroup, ListGroupItem, Col, Row, Grid } from 'react-bootstrap';
 
 
 const mapDispatchToProps = dispatch => {
@@ -129,7 +131,7 @@ class ConnectedRecipeForm extends React.Component{
 
 	render(){
 		return (
-			<div>
+			<div className="RecipeForm">
 
 			<form>
 
@@ -138,44 +140,55 @@ class ConnectedRecipeForm extends React.Component{
 					<FormControl type="text" placeholder="Enter name" onChange={this.handleChange}/>
 				</FormGroup>
 
-				<ListGroup>
-					{console.log('State: ', this.state)}
-					{this.state.ingredients.map(ing => {
-						return (
-							<ListGroupItem key={ing.name}>
-								<Col xs={10}>
-										{ing.name}
-								</Col>
-								<Col>
-									<Button id={ing.name} onClick={this.removeIngredient}>
-										Remove
-									</Button>
-								</Col>
-							</ListGroupItem>
+				<FormGroup>
+					<ListGroup>
+						{console.log('State: ', this.state)}
+						{this.state.ingredients.map(ing => {
+							return (
+								<ListGroupItem key={ing.name}>
+									<Col xs={10}>
+											{ing.name}
+									</Col>
+									<Col>
+										<Button className="ItemButton"
+												id={ing.name}
+												onClick={this.removeIngredient}>
+											Remove
+										</Button>
+									</Col>
+								</ListGroupItem>
 
-						)
-					})}
-				</ListGroup>
+							)
+						})}
+					</ListGroup>
 
-				{/* <FieldGroup
-							id="newIngredient"
-							type="text"
-							label=""
-							placeholder="Add ingredient"
-							onChange={this.handleChange}/> */}
-
-				<FormGroup controlId="newIngredient">
-					<ControlLabel>Add Ingredient</ControlLabel>
-					<FormControl type="text" placeholder="Enter ingredient" onChange={this.handleChange}/>
-					<Button onClick={this.addIngredient}>Add ingredient</Button>
 				</FormGroup>
+
+
+
+						<FormGroup controlId="newIngredient" className="IngredientText">
+							<ControlLabel>Add Ingredient</ControlLabel>
+							<FormControl type="text" placeholder="Enter ingredient" onChange={this.handleChange} xs={8}/>
+
+							<Button onClick={this.addIngredient}>+</Button>
+						</FormGroup>
+
+
+
+
+
+
+
+
 
 
 
 
 			</form>
+				<div className="AddButton">
+					<Button onClick={this.handleSubmit}>Add</Button>
+				</div>
 
-			<Button onClick={this.handleSubmit}>Add</Button>
 			</div>
 		);
 	}

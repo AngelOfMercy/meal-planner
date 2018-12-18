@@ -43,13 +43,7 @@ class ConnectedShopping extends React.Component{
 	}
 
 	handleChange(e){
-		console.log('Target: ', e.target);
-		console.log('Target ID: ', e.target.id)
-		console.log('Available: ', this.state.availableItems);
 		if(_.includes(this.state.availableItems, e.target.id)){
-
-
-
 			this.setState({
 				availableItems: _.remove(this.state.availableItems, item => {
 					return e.target.id === item
@@ -65,10 +59,8 @@ class ConnectedShopping extends React.Component{
 	render(){
 		return (
 			<div>
-				<h1>Shopping List</h1>
 				<ul>
 					{this.getUniqueIngredients().map(item => {
-						console.log(item);
 						return (
 							<li key={item} id={item} onClick={this.handleChange}>
 								{this.renderListItem(item)}

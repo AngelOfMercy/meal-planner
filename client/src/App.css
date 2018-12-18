@@ -1,32 +1,31 @@
+body {
+  background: #E7E5DF;
+}
+
 .App {
 
+ color: #393E41;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.form-control {
+  background: #D3D0CB
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: left;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-default {
+  background: #698F3F;
+  border-color: #393E41;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-default:hover {
+  background: #769950;
+  border-color: #393E41;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar-default {
+  background: #769950;
+  color: #D3D0CB;
+}
+
+.navbar-default .navbar-brand {
+  color: #393E41;
 }
