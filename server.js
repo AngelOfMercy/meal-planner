@@ -11,7 +11,8 @@ import Recipe from './src/controller/Recipe';
 
 const app = express();
 
-dotenv.config();
+
+//dotenv.config();
 
 app.use(express.json());
 
@@ -29,12 +30,13 @@ app.put('/recipe/:id', Recipe.update);
 app.delete('/recipe/:id', Recipe.delete);
 
 app.get('*', (req, res) => {
+	console.log('Fallback request');
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 
 //-----------------------------------------------------------
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 5000
 
 app.listen(port);
 
