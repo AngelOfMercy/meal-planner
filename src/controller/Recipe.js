@@ -85,27 +85,32 @@ const Recipe = {
 			return res.status(400).send(err);
 		}
 	},
-	getShoppingList (req, res){
+	async getShoppingList (req, res){
 		const recipies = req.body.recipe;
 
-		let findShoppingList = 'SELECT DISTINCT name FROM ingredients WHERE ' + 
+		console.log(req.body.recipies);
+
+		let findShoppingList = 'SELECT DISTINCT name FROM ingredient WHERE ' + 
 			recipies.map((item, index) => {
 			return `recipe_id = $${index+1}`
-		}).join(' AND ');;
-		
-		const value = recipies.map((item) => {
-			return item.id;
-		})
+		}).join(' AND ');
 
 		console.log(findShoppingList);
-		console.log(value);
+		
+		// const value = recipies.map((item) => {
+		// 	return item.id;
+		// })
 
+		// console.log(value);
+
+		console.log(recipies);
 		try{
-			const { rows } = await db.query(findShoppingList, value);
+			const { rows } = await db.query(findShoppingList, recipies);
+
+			return res.status(200).send(rows);
 		} catch (err) {
 			return res.status(400).send(err);
 		}
-
 	},
 	async update(req, res) {
 		const findOneQuery = 'SELECT * FROM recipe WHERE id=$1';
