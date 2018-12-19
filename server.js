@@ -4,6 +4,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import 'babel-polyfill';
 
+const path = require('path');
+
 import Recipe from './src/controller/Recipe';
 //import Recipe from './src/controllers/Recipe';
 
@@ -13,17 +15,22 @@ dotenv.config();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-	return res.status(200).send({
-		message: 'YAY, we have out first endpoint!'
-	})
-})
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+
+// app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname+'/client/public/index.html'));
+// })
 
 app.post('/recipe', Recipe.create);
 app.get('/recipe', Recipe.getAll);
 app.get('recipe/:id', Recipe.getOne);
 app.put('/recipe/:id', Recipe.update);
 app.delete('/recipe/:id', Recipe.delete);
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+})
 
 //-----------------------------------------------------------
 

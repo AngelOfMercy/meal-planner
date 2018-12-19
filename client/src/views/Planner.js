@@ -1,7 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import axios from 'axios';
+
 import Container from './recipes/Container';
+
+
 //import { } from 'react-bootstrap'
 
 const mapStateToProps = state => {
@@ -24,6 +28,13 @@ class ConnectedPlanner extends React.Component{
 		};
 
 		this.getDayList = this.getDayList.bind(this);
+	}
+
+	componentWillMount(){
+		console.log('Will mount?')
+		axios.get('/recipe').then(data => {
+			console.log(data);
+		})
 	}
 
 	getDayList(today){

@@ -59,8 +59,8 @@ const createIngredientTable = () => {
 }
 
 const dropTables = () => {
-	const queryText = 'DROP TABLE IF EXISTS recipe';
-	pool.query(queryText)
+	const dropRecipe = 'DROP TABLE IF EXISTS recipe';
+	pool.query(dropRecipe)
 		.then((res) => {
 			console.log(res);
 			pool.end();
@@ -69,6 +69,17 @@ const dropTables = () => {
 			console.error(err);
 			pool.end();
 		})
+
+	const dropIngredient = 'DROP TABLE IF EXISTS ingredient';
+		pool.query(dropIngredient)
+			.then((res) => {
+				console.log(res);
+				pool.end();
+			})
+			.catch((err) => {
+				console.error(err);
+				pool.end();
+			})
 }
 
 pool.on('remove', () => {
