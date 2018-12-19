@@ -11,11 +11,11 @@ export default class Main extends React.Component {
 		return (
 			<Grid>
 			  <Row>
-				<Col xs={12} md={4}>
+				{/* <Col xs={12} md={4}>
 				  <h1>New Recipe</h1>
 				  <RecipeForm></RecipeForm>
-				</Col>
-				<Col xs={12} md={4}>
+				</Col> */}
+				<Col xs={12} md={8}>
 				  <h1>Daily Meals</h1>
 				  <Planner/>
 				</Col>

@@ -18,9 +18,11 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.post('/recipe', Recipe.create);
 app.get('/recipe', Recipe.getAll);
-app.get('recipe/:id', Recipe.getOne);
+app.get('/recipe/:id', Recipe.getOne);
 app.put('/recipe/:id', Recipe.update);
 app.delete('/recipe/:id', Recipe.delete);
+
+app.get('/recipe/ingredients/:id', Recipe.getIngredients);
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));

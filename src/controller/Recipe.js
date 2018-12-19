@@ -71,6 +71,20 @@ const Recipe = {
 			return res.status(400).send(err);
 		}
 	},
+	async getIngredients (req, res) {
+		const findIngredients = 'SELECT name FROM ingredients WHERE recipe_id = $1';
+
+		try {
+			const value = [
+				req.params.id
+			];
+
+			const { rows } = await db.query(findIngredients, value);
+			return res.status(200).send(rows);
+		} catch (err) {
+			return res.status(400).send(err);
+		}
+	},
 	async update(req, res) {
 		const findOneQuery = 'SELECT * FROM recipe WHERE id=$1';
 		const updateOneQuery = 'UPDATE recipe SET title=$1, modified=$2 WHERE id=$3 returning *';

@@ -24,16 +24,21 @@ class ConnectedPlanner extends React.Component{
 
 		this.state = {
 			today: (date.getDay()-1)%7,
-			week: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+			week: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+			recipe: []
 		};
 
 		this.getDayList = this.getDayList.bind(this);
+		this.getRecipies = this.getRecipies.bind(this);
 	}
 
 	componentWillMount(){
 		console.log('Will mount?')
-		axios.get('/recipe').then(data => {
-			console.log(data);
+		axios.get('/recipe').then(res => {
+			console.log(res.data.rows);
+			this.setState({
+				recipe: res.data.rows
+			});
 		})
 	}
 
@@ -43,12 +48,16 @@ class ConnectedPlanner extends React.Component{
 		return prefix.concat(post);
 	}
 
+	getRecipies(){
+		return this.state.recipe;
+	}
+
 	render(){
 		return (
 			<div>
 				{this.state.week.map(day => {
 						return (
-							<Container key={day} day={day}>
+							<Container key={day} day={day} recipe={this.state.recipe}>
 
 							</Container>
 

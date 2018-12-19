@@ -11,7 +11,7 @@ import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 const mapStateToProps = state => {
 	return {
-		recipe: state.recipe
+		// recipe: state.recipe
 	}
 }
 
@@ -64,8 +64,9 @@ class ConnectedContainer extends React.Component{
 					<ControlLabel>{this.props.day} Dinner</ControlLabel>
 						<FormControl id="selection" componentClass="select" placeholder="None" onChange={this.handleChange}>
 							{this.props.recipe.map(rec => {
+								console.log('Option: ', rec);
 								return (
-									<option key={rec.title} value={rec.title}>
+									<option key={rec.id} value={rec.id}>
 										{rec.title}
 									</option>
 								)
