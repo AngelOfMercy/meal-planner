@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import axios from 'axios';
+
 import { addShopping } from '../../js/actions/index';
 
 import _ from 'lodash';
@@ -40,6 +42,11 @@ class ConnectedContainer extends React.Component{
 		})
 
 		if(e.target.value !== "None"){
+
+			axios.get(`/recipies/ingredients/${e.target.value}`).then(data => {
+				console.log('API Ingredients data: ', data);
+			})
+
 			let selectedRecipe = _.find(this.props.recipe, recipe => {
 				return recipe.title === e.target.value
 			});

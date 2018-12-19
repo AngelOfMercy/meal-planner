@@ -29,11 +29,9 @@ class ConnectedPlanner extends React.Component{
 		};
 
 		this.getDayList = this.getDayList.bind(this);
-		this.getRecipies = this.getRecipies.bind(this);
 	}
 
 	componentWillMount(){
-		console.log('Will mount?')
 		axios.get('/recipe').then(res => {
 			console.log(res.data.rows);
 			this.setState({
@@ -46,10 +44,6 @@ class ConnectedPlanner extends React.Component{
 		let prefix = this.state.week.slice(today, this.state.week.length);
 		let post = this.state.week.slice(0, today);
 		return prefix.concat(post);
-	}
-
-	getRecipies(){
-		return this.state.recipe;
 	}
 
 	render(){

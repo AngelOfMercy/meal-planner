@@ -72,12 +72,14 @@ const Recipe = {
 		}
 	},
 	async getIngredients (req, res) {
-		const findIngredients = 'SELECT name FROM ingredients WHERE recipe_id = $1';
+		const findIngredients = 'SELECT name FROM ingredient WHERE recipe_id = $1';
 
 		try {
 			const value = [
 				req.params.id
 			];
+
+			console.log('Value ', value)
 
 			const { rows } = await db.query(findIngredients, value);
 			return res.status(200).send(rows);
