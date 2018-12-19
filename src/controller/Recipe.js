@@ -85,6 +85,28 @@ const Recipe = {
 			return res.status(400).send(err);
 		}
 	},
+	getShoppingList (req, res){
+		const recipies = req.body.recipe;
+
+		let findShoppingList = 'SELECT DISTINCT name FROM ingredients WHERE ' + 
+			recipies.map((item, index) => {
+			return `recipe_id = $${index+1}`
+		}).join(' AND ');;
+		
+		const value = recipies.map((item) => {
+			return item.id;
+		})
+
+		console.log(findShoppingList);
+		console.log(value);
+
+		try{
+			const { rows } = await db.query(findShoppingList, value);
+		} catch (err) {
+			return res.status(400).send(err);
+		}
+
+	},
 	async update(req, res) {
 		const findOneQuery = 'SELECT * FROM recipe WHERE id=$1';
 		const updateOneQuery = 'UPDATE recipe SET title=$1, modified=$2 WHERE id=$3 returning *';
