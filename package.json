@@ -4,6 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "build": "babel server.js --out-dir build",
     "dev-start": "babel-watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
