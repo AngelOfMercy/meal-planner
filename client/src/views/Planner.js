@@ -32,7 +32,7 @@ class ConnectedPlanner extends React.Component{
 	}
 
 	componentWillMount(){
-		axios.get('/recipe').then(res => {
+		axios.get('/api/recipe').then(res => {
 			console.log(res.data.rows);
 			this.setState({
 				recipe: res.data.rows

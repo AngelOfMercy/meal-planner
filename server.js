@@ -16,20 +16,27 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.post('/recipe', Recipe.create);
-app.get('/recipe', Recipe.getAll);
-app.get('/recipe/:id', Recipe.getOne);
-app.put('/recipe/:id', Recipe.update);
-app.delete('/recipe/:id', Recipe.delete);
-app.get('/recipe/ingredients/list', Recipe.getShoppingList);
-app.get('/recipe/ingredients/:id', Recipe.getIngredients);
 
+//-----------------------------------------------------
+//API
+//-----------------------------------------------------
+app.post('/api/recipe', Recipe.create);
+app.get('/api/recipe', Recipe.getAll);
+app.get('/api/recipe/:id', Recipe.getOne);
+app.put('/api/recipe/:id', Recipe.update);
+app.delete('/api/recipe/:id', Recipe.delete);
+//app.get('/api/recipe/ingredients/list', Recipe.getShoppingList);
+app.get('/api/recipe/ingredients/:id', Recipe.getIngredients);
+
+//-----------------------------------------------------
+//Web Page
+//-----------------------------------------------------
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 
-//-----------------------------------------------------------
+//-----------------------------------------------------
 
 const port = process.env.PORT || 5000
 

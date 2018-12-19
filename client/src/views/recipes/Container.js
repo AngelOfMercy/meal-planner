@@ -43,7 +43,7 @@ class ConnectedContainer extends React.Component{
 
 		if(e.target.value !== "None"){
 
-			axios.get(`/recipies/ingredients/${e.target.value}`).then(data => {
+			axios.get(`/api/recipies/ingredients/${e.target.value}`).then(data => {
 				console.log('API Ingredients data: ', data);
 			})
 

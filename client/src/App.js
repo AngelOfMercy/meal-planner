@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import './App.css';
 
-import Planner from './views/Planner';
-import Shopping from './views/Shopping';
 import RecipeForm from './views/recipes/RecipeForm';
 
 import Main from './views/Main';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-import {Grid, Row, Col, Navbar} from 'react-bootstrap';
+import {Grid, Row, Col, Navbar, Nav, NavItem} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class App extends Component {
 
@@ -21,19 +19,35 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className="App">
-      			<Navbar>
-			        <Navbar.Header>
-            <Navbar.Brand>
-              Meal Planner
-            </Navbar.Brand>
+
+          <Navbar collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                Meal Planner
+              </Navbar.Brand>
             </Navbar.Header>
 
+            <Nav>
+
+                <NavItem componentClass={Link} href="/recipe" to="/recipe">Add Recipe</NavItem>
+                <NavItem componentClass={Link} href="/" to="/">Planner</NavItem>
+
+
+            </Nav>
           </Navbar>
-        <Router>
-          <Route path="/" component={Main}/>
-        </Router>
+
+          <Switch>
+            <Route path="/recipe" component={RecipeForm}/>
+            <Route path="/"       component={Main}/>
+          </Switch>
+
+
+
       </div>
+      </Router>
+
     );
   }
 }
