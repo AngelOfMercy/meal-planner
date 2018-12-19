@@ -31,7 +31,7 @@ class App extends Component {
 
           </Navbar>
         <Router>
-          <Route exact path="/" component={Main}/>
+          <Route path="/" component={Main}/>
         </Router>
       </div>
     );
