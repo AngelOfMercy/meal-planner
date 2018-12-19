@@ -11,13 +11,38 @@ pool.on('connect', () => {
 	console.log('Connected to the Database');
 });
 
+function query(query){
 
-const createTables = () => {
+}
+
+const createRecipeTable = () => {
 	const queryText = `
 		CREATE TABLE IF NOT EXISTS
 		recipe(
 			id UUID PRIMARY KEY,
 			title VARCHAR(128) NOT NULL,
+			description VARCHAR(512) NOT NULL,
+			created_date TIMESTAMP,
+			modified_date TIMESTAMP
+		)`;
+
+	pool.query(queryText)
+		.then((res) => {
+			console.log(res);
+			pool.end();
+		})
+		.catch((err) => {
+			console.error(err);
+			pool.end();
+		})
+}
+
+const createIngredientTable = () => {
+	const queryText = `
+		CREATE TABLE IF NOT EXISTS
+		ingredient(
+			recipe_id UUID,
+			name VARCHAR(128),
 			created_date TIMESTAMP,
 			modified_date TIMESTAMP
 		)`;
@@ -34,7 +59,7 @@ const createTables = () => {
 }
 
 const dropTables = () => {
-	const queryText = 'DROPTABLE IF EXISTS recipe';
+	const queryText = 'DROP TABLE IF EXISTS recipe';
 	pool.query(queryText)
 		.then((res) => {
 			console.log(res);
@@ -52,7 +77,8 @@ pool.on('remove', () => {
 });
 
 module.exports = {
-	createTables,
+	createIngredientTable,
+	createRecipeTable,
 	dropTables
 }
 

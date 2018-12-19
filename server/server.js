@@ -2,9 +2,9 @@
 
 import express from 'express';
 import dotenv from 'dotenv';
-import 'babel-polyfill'
+import 'babel-polyfill';
 
-import Recipe from './src/usingDB/controller/Recipe';
+import Recipe from './src/controller/Recipe';
 //import Recipe from './src/controllers/Recipe';
 
 const app = express();

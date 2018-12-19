@@ -4,21 +4,41 @@ import db from '../db';
 
 const Recipe = {
 	async create(req, res) {
+
+		const recipeId = uuidv4();
+		const now = moment(new Date());
+
+		//CREATE THE RECIPE DB ENTRY;
 		const query = `INSERT INTO
-			recipe(id, title, created_date, modified_date)
-			VALUES($1, $2, $3, $4)
+			recipe(id, title, description, created_date, modified_date)
+			VALUES($1, $2, $3, $4, $5)
 			returning *`;
+		const ingredientsQuery = `INSERT INTO
+			ingredient(recipe_id, name, created_date, modified_date)
+			VALUES ($1, $2, $3, $4)`;
+
 		const values = [
-			uuidv4(),
+			recipeId,
 			req.body.title,
-			moment(new Date()),
-			moment(new Date())
+			req.body.description || "",
+			now,
+			now
 		];
 
 		try {
 			const { rows } = await db.query(query, values);
+			for (let i = 0; i < req.body.ingredients.length; i++){
+				let itemValue = [
+					recipeId,
+					req.body.ingredients[i],
+					now,
+					now
+				];
+				await db.query(ingredientsQuery, itemValue)
+			}
 			return res.status(201).send(rows[0]);
 		} catch (err) {
+			console.log(err);
 			return res.status(400).send(err);
 		}
 	},
