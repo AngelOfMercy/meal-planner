@@ -21,8 +21,9 @@ app.get('/recipe', Recipe.getAll);
 app.get('/recipe/:id', Recipe.getOne);
 app.put('/recipe/:id', Recipe.update);
 app.delete('/recipe/:id', Recipe.delete);
-
+app.get('/recipe/ingredients/list', Recipe.getShoppingList);
 app.get('/recipe/ingredients/:id', Recipe.getIngredients);
+
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
