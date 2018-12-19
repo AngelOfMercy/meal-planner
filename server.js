@@ -1,27 +1,20 @@
 //server.js
 
-import express from 'express';
-import dotenv from 'dotenv';
-import 'babel-polyfill';
-
+const express = require('express');
 const path = require('path');
+require('babel-polyfill');
+const Recipe = require('./src/controller/Recipe');
 
-import Recipe from './src/controller/Recipe';
-//import Recipe from './src/controllers/Recipe';
+if(!process.env.PRODUCTION){
+	const dotenv = require('dotenv');
+	dotenv.config();
+}
 
 const app = express();
-
-
-//dotenv.config();
 
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
-
-// app.get('*', (req, res) => {
-// 	res.sendFile(path.join(__dirname+'/client/public/index.html'));
-// })
 
 app.post('/recipe', Recipe.create);
 app.get('/recipe', Recipe.getAll);
@@ -30,7 +23,6 @@ app.put('/recipe/:id', Recipe.update);
 app.delete('/recipe/:id', Recipe.delete);
 
 app.get('*', (req, res) => {
-	console.log('Fallback request');
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 

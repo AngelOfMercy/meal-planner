@@ -1,6 +1,6 @@
-import moment from 'moment';
-import uuidv4 from 'uuid/v4';
-import db from '../db';
+const moment = require('moment');
+const uuidv4 = require('uuid/v4');
+const db = require('../db');
 
 const Recipe = {
 	async create(req, res) {
@@ -51,6 +51,7 @@ const Recipe = {
 				rowCount
 			})
 		} catch (err) {
+			console.log(err)
 			return res.status(400).send(err);
 		}
 	},
@@ -100,4 +101,4 @@ const Recipe = {
 	}
 }
 
-export default Recipe;
+module.exports = Recipe;
