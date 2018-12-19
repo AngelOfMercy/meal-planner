@@ -1,7 +1,7 @@
 import {ADD_SHOPPING, ADD_RECIPE} from '../constants/action-types';
 
 const initialState = {
-	shopping: [],
+	list: {},
 	recipe: []
 }
 
@@ -10,8 +10,8 @@ const rootReducer = (state = initialState, action) => {
 		case ADD_SHOPPING:
 			return {
 				...state,
-				shopping: {
-					...state.shopping,
+				list: {
+					...state.list,
 					[action.payload.day]:action.payload.ingredients
 				}
 			};

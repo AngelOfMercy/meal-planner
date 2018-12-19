@@ -26,7 +26,7 @@ app.get('/api/recipe/:id', Recipe.getOne);
 app.put('/api/recipe/:id', Recipe.update);
 app.delete('/api/recipe/:id', Recipe.delete);
 //app.get('/api/recipe/ingredients/list', Recipe.getShoppingList);
-app.get('/api/recipe/ingredients/:id', Recipe.getIngredients);
+app.get('/api/recipe/:id/ingredients/', Recipe.getIngredients);
 
 //-----------------------------------------------------
 //Web Page

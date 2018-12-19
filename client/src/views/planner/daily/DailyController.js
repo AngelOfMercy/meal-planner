@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 
-import { addShopping } from '../../js/actions/index';
+import { addShopping } from '../../../js/actions/index';
 
 import _ from 'lodash';
 
@@ -14,6 +14,7 @@ import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 const mapStateToProps = state => {
 	return {
 		// recipe: state.recipe
+		list: state.list
 	}
 }
 
@@ -30,30 +31,27 @@ class ConnectedContainer extends React.Component{
 		super(props)
 
 		this.state = {
-			selection: "None"
+			selection: props.selection || null
 		}
 
 		this.handleChange = this.handleChange.bind(this);
+		this.loadIngredients = this.loadIngredients.bind(this);
 	}
 
-	handleChange(e){
-		this.setState({
-			[e.target.id]: e.target.value
-		})
+	componentWillMount(){
+		this.loadIngredients(this.state.selection);
+	}
 
-		if(e.target.value !== "None"){
+	loadIngredients(id){
+		if(id && id !== ""){
+			axios.get(`/api/recipe/${id}/ingredients/`).then(res => {
 
-			axios.get(`/api/recipies/ingredients/${e.target.value}`).then(data => {
-				console.log('API Ingredients data: ', data);
-			})
+				//TODO: Filter out if given a non 200 response?
 
-			let selectedRecipe = _.find(this.props.recipe, recipe => {
-				return recipe.title === e.target.value
-			});
-
-			this.props.addShopping({
-				day: this.props.day,
-				ingredients: selectedRecipe.ingredients
+				this.props.addShopping({
+					day: this.props.day,
+					ingredients: res.data
+				})
 			})
 		} else {
 			this.props.addShopping({
@@ -61,6 +59,16 @@ class ConnectedContainer extends React.Component{
 				ingredients: []
 			})
 		}
+	}
+
+	handleChange(e){
+		this.setState({
+			[e.target.id]: e.target.value
+		})
+
+		this.loadIngredients(e.target.value);
+
+		console.log(this.props.list);
 
 	}
 
@@ -70,6 +78,7 @@ class ConnectedContainer extends React.Component{
 				<FormGroup>
 					<ControlLabel>{this.props.day} Dinner</ControlLabel>
 						<FormControl id="selection" componentClass="select" placeholder="None" onChange={this.handleChange}>
+							<option value="">---</option>
 							{this.props.recipe.map(rec => {
 								console.log('Option: ', rec);
 								return (
@@ -78,7 +87,7 @@ class ConnectedContainer extends React.Component{
 									</option>
 								)
 							})}
-							<option value="None">---</option>
+
 						</FormControl>
 				</FormGroup>
 			</form>

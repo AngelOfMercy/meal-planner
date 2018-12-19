@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import RecipeForm from './views/recipes/RecipeForm';
+import AddRecipeContainer from './views/RecipeContainer';
 
-import Main from './views/Main';
+import PlannerContainer from './views/PlannerContainer';
 
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
@@ -39,8 +39,8 @@ class App extends Component {
           </Navbar>
 
           <Switch>
-            <Route path="/recipe" component={RecipeForm}/>
-            <Route path="/"       component={Main}/>
+            <Route path="/recipe" component={AddRecipeContainer}/>
+            <Route path="/"       component={PlannerContainer}/>
           </Switch>
 
 

@@ -3,14 +3,14 @@ import {connect} from 'react-redux';
 
 import axios from 'axios';
 
-import Container from './recipes/Container';
+import DailyController from './daily/DailyController';
 
 
 //import { } from 'react-bootstrap'
 
 const mapStateToProps = state => {
 	return {
-		recipe: state.recipe
+		//recipe: state.recipe
 	}
 }
 
@@ -25,36 +25,19 @@ class ConnectedPlanner extends React.Component{
 		this.state = {
 			today: (date.getDay()-1)%7,
 			week: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-			recipe: []
 		};
 
-		this.getDayList = this.getDayList.bind(this);
-	}
-
-	componentWillMount(){
-		axios.get('/api/recipe').then(res => {
-			console.log(res.data.rows);
-			this.setState({
-				recipe: res.data.rows
-			});
-		})
-	}
-
-	getDayList(today){
-		let prefix = this.state.week.slice(today, this.state.week.length);
-		let post = this.state.week.slice(0, today);
-		return prefix.concat(post);
 	}
 
 	render(){
+
 		return (
 			<div>
+				<h1>Day Planner</h1>
 				{this.state.week.map(day => {
 						return (
-							<Container key={day} day={day} recipe={this.state.recipe}>
-
-							</Container>
-
+							<DailyController key={day} day={day} recipe={this.props.recipe}>
+							</DailyController>
 						)
 					})
 				}
