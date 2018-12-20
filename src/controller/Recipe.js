@@ -30,7 +30,7 @@ const Recipe = {
 			for (let i = 0; i < req.body.ingredients.length; i++){
 				let itemValue = [
 					recipeId,
-					req.body.ingredients[i],
+					req.body.ingredients[i].name,
 					now,
 					now
 				];
@@ -79,8 +79,6 @@ const Recipe = {
 				req.params.id
 			];
 
-			console.log('Value ', value)
-
 			const { rows } = await db.query(findIngredients, value);
 			return res.status(200).send(rows);
 		} catch (err) {
@@ -92,13 +90,13 @@ const Recipe = {
 
 		console.log(req.body.recipies);
 
-		let findShoppingList = 'SELECT DISTINCT name FROM ingredient WHERE ' + 
+		let findShoppingList = 'SELECT DISTINCT name FROM ingredient WHERE ' +
 			recipies.map((item, index) => {
 			return `recipe_id = $${index+1}`
 		}).join(' AND ');
 
 		console.log(findShoppingList);
-		
+
 		// const value = recipies.map((item) => {
 		// 	return item.id;
 		// })

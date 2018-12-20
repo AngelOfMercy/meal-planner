@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { addRecipe } from '../../js/actions/index';
 
 import _ from 'lodash';
+import axios from 'axios';
 import { FormGroup, ControlLabel, FormControl, Button, ListGroup, ListGroupItem, Col, Row } from 'react-bootstrap';
 
 
@@ -63,16 +64,20 @@ class ConnectedRecipeForm extends React.Component{
 		const { title, ingredients } = this.state;
 
 		if(_.includes(existing, title)){
-
-			// this.setState({
-			// 	isValidTitle: false
-			// })
 			return
 		}
 
-		this.props.addRecipe({
-			title,
-			ingredients
+		// this.props.addRecipe({
+		// 	title,
+		// 	ingredients
+		// })
+
+		axios.post('/api/recipe', {
+			title: this.state.title,
+			ingredients: this.state.ingredients,
+			description: ""
+		}).then(res => {
+			console.log(res);
 		})
 
 		this.setState({
