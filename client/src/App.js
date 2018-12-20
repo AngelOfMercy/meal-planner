@@ -30,7 +30,7 @@ class App extends Component {
 
             <Nav>
 
-                <NavItem componentClass={Link} href="/recipe" to="/recipe">Add Recipe</NavItem>
+                <NavItem componentClass={Link} href="/recipe" to="/recipe">Recipes</NavItem>
                 <NavItem componentClass={Link} href="/" to="/">Planner</NavItem>
 
 

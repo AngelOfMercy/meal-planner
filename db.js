@@ -41,7 +41,7 @@ const createIngredientTable = () => {
 	const queryText = `
 		CREATE TABLE IF NOT EXISTS
 		ingredient(
-			recipe_id UUID,
+			recipe_id UUID REFERENCES recipe(id) ON DELETE CASCADE,
 			name VARCHAR(128),
 			created_date TIMESTAMP,
 			modified_date TIMESTAMP
