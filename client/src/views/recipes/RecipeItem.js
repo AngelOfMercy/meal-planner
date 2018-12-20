@@ -17,11 +17,15 @@ export default class RecipeItem extends React.Component {
 						<h4>{this.props.recipe.title}</h4>
 					</Col>
 					<Col className="float-right">
+						<div className="float-right">
+							<Button>Hi</Button>
+						hi
+						</div>
 						Delete
 					</Col>
 				</Row>
 				<Row>
-					Description: {this.props.recipe.description}
+					{this.props.recipe.description}
 				</Row>
 			</Grid>
 		)
