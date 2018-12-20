@@ -7,8 +7,7 @@ import PlannerContainer from './views/PlannerContainer';
 
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-import {Grid, Row, Col, Navbar, Nav, NavItem} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class App extends Component {
 

@@ -10,7 +10,7 @@ import DailyController from './daily/DailyController';
 
 const mapStateToProps = state => {
 	return {
-		//recipe: state.recipe
+		selection: state.selection
 	}
 }
 
@@ -19,14 +19,11 @@ class ConnectedPlanner extends React.Component{
 
 	constructor(props){
 		super(props);
-
-		let date = new Date();
-
+		//let date = new Date();
 		this.state = {
-			today: (date.getDay()-1)%7,
+			//today: (date.getDay()-1)%7,
 			week: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
 		};
-
 	}
 
 	render(){
@@ -34,10 +31,14 @@ class ConnectedPlanner extends React.Component{
 		return (
 			<div>
 				<h1>Day Planner</h1>
-				{this.state.week.map(day => {
+				{this.state.week.map((day, index) => {
 						return (
-							<DailyController key={day} day={day} recipe={this.props.recipe}>
-							</DailyController>
+							<DailyController
+									key={index}
+									day={day}
+									index={index}
+									selection={this.props.selection[index]}
+									recipe={this.props.recipe} />
 						)
 					})
 				}

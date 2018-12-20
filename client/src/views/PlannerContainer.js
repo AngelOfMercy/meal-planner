@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Planner from './planner/DailyPlanner';
-import Shopping from './planner/ShoppingListContainer';
+import Shopping from './planner/ShoppingList';
 import RecipeForm from './recipes/RecipeForm';
 
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -26,7 +26,6 @@ export default class PlanningContainer extends React.Component {
 
 	componentWillMount(){
 		axios.get('/api/recipe').then(res => {
-			console.log('Recipe date recieved: ', res.data.rows);
 			this.setState({
 				recipe: res.data.rows,
 				isLoading: false
@@ -42,7 +41,6 @@ export default class PlanningContainer extends React.Component {
 			</Grid>;
 		}
 
-		console.log(this.state.recipe);
 		return (
 			<Grid className="PlannerContainer">
 			  <Row>
