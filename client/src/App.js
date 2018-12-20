@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import AddRecipeContainer from './views/RecipeContainer';
+import RecipeContainer from './views/RecipeContainer';
 
 import PlannerContainer from './views/PlannerContainer';
 
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap'
 
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
@@ -30,16 +31,32 @@ class App extends Component {
 
             <Nav>
 
-                <NavItem componentClass={Link} href="/recipe" to="/recipe">Recipes</NavItem>
+            <LinkContainer to="/recipe/add">
+              <NavItem>Recipes</NavItem>
+            </LinkContainer>
+
+            <LinkContainer to="/recipe/list">
+              <NavItem>Recipes</NavItem>
+            </LinkContainer>
+
+            {/* <NavItem componentClass={Link} href="/recipe/list" to="/recipe/list">Recipes</NavItem> */}
                 <NavItem componentClass={Link} href="/" to="/">Planner</NavItem>
 
+            <NavLink to="/recipe/add">
+              Hi
+            </NavLink>
+
+            <NavLink to="/recipe">
+              Bye
+            </NavLink>
 
             </Nav>
           </Navbar>
 
           <Switch>
-            <Route path="/recipe" component={AddRecipeContainer}/>
-            <Route path="/"       component={PlannerContainer}/>
+            <Route exact path="/" component={PlannerContainer}/>
+            <Route path="/recipe" component={RecipeContainer}/>
+
           </Switch>
 
 

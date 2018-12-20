@@ -8,15 +8,19 @@ import RecipeList from './recipes/RecipeList';
 
 
 
-export default class AddRecipeContainer extends React.Component {
+export default class RecipeContainer extends React.Component {
 	render(){
+
+		console.log(this.props.match);
+
 		return (
-			<Router>
+
 				<Switch>
-					<Route exact path={`${this.props.match.url}/add`} component={RecipeForm}/>
-					<Route path={`${this.props.match.url}/`} component={RecipeList}/>
+					<Route exact path={`${this.props.match.path}/add`} component={RecipeForm}/>
+					<Route exact path={this.props.path} component={RecipeList}/>
+
 				</Switch>
-			</Router>
+
 		);
 	}
 }
