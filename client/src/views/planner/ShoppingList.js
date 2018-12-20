@@ -34,7 +34,7 @@ class ConnectedShoppingList extends React.Component{
 
 		console.log('List', ingredientList);
 
-		return _.uniq(ingredientList);
+		return _.uniqBy(ingredientList, 'name');
 	}
 
 
