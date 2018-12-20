@@ -5,10 +5,8 @@ import Shopping from './planner/ShoppingList';
 import RecipeForm from './recipes/RecipeForm';
 
 import {Grid, Row, Col} from 'react-bootstrap';
-import {connect} from 'react-redux';
 
 import axios from 'axios';
-import Container from './planner/daily/DailyController';
 
 
 export default class PlanningContainer extends React.Component {

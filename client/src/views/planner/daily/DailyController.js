@@ -5,10 +5,6 @@ import axios from 'axios';
 
 import { addShopping, updateDayPlan } from '../../../js/actions/index';
 
-import _ from 'lodash';
-
-//import Ingredients from './Ingredients';
-
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 const mapStateToProps = state => {
