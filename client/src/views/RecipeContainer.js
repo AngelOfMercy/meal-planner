@@ -14,8 +14,8 @@ export default class RecipeContainer extends React.Component {
 		console.log(this.props.match);
 
 		return (
-
 				<Switch>
+
 					<Route exact path={`${this.props.match.path}/add`} component={RecipeForm}/>
 					<Route exact path={this.props.path} component={RecipeList}/>
 

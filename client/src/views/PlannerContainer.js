@@ -40,7 +40,7 @@ export default class PlanningContainer extends React.Component {
 		}
 
 		return (
-			<Grid className="PlannerContainer">
+			<div className="PlannerContainer">
 			  <Row>
 				<Col xs={12} md={8}>
 				  <Planner recipe={this.state.recipe}/>
@@ -49,7 +49,7 @@ export default class PlanningContainer extends React.Component {
 				  <Shopping />
 				</Col>
 			  </Row>
-			</Grid>
+			</div>
 		);
 	}
 }

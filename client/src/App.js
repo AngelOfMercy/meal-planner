@@ -5,10 +5,10 @@ import RecipeContainer from './views/RecipeContainer';
 
 import PlannerContainer from './views/PlannerContainer';
 
-import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap'
 
-import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Navbar, Nav, NavItem, Grid} from 'react-bootstrap';
 
 class App extends Component {
 
@@ -22,36 +22,36 @@ class App extends Component {
       <Router>
       <div className="App">
 
-          <Navbar collapseOnSelect>
+          <Navbar fluid collapseOnSelect>
+
             <Navbar.Header>
               <Navbar.Brand>
-                Meal Planner
+                <Link to="/">
+                  Meal Planner
+                </Link>
+
               </Navbar.Brand>
             </Navbar.Header>
 
             <Nav>
-
-            <LinkContainer to="/recipe/add">
-              <NavItem>Recipes</NavItem>
-            </LinkContainer>
-
             <LinkContainer to="/recipe">
               <NavItem>Recipes</NavItem>
             </LinkContainer>
 
-            <LinkContainer to="/">
+            {/* <LinkContainer to="/">
               <NavItem>Planner</NavItem>
-            </LinkContainer>
+            </LinkContainer> */}
 
 
             </Nav>
           </Navbar>
+          <Grid>
+            <Switch>
+              <Route exact path="/" component={PlannerContainer}/>
+              <Route path="/recipe" component={RecipeContainer}/>
 
-          <Switch>
-            <Route exact path="/" component={PlannerContainer}/>
-            <Route path="/recipe" component={RecipeContainer}/>
-
-          </Switch>
+            </Switch>
+          </Grid>
 
 
 
