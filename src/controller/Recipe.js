@@ -150,7 +150,10 @@ const Recipe = {
 
 			const response = await db.query(deleteQuery, [req.params.id]);
 
-			return res.status(201).send(response.rowCount);
+			return res.status(201).send({
+				message: "Recipe deleted",
+				id: req.params.id
+			});
 
 
 
