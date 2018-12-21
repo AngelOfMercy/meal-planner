@@ -8,8 +8,8 @@ import { addRecipe } from '../../js/actions/index';
 import _ from 'lodash';
 import axios from 'axios';
 import { FormGroup, ControlLabel, FormControl, Button, ListGroup, ListGroupItem, Col, Row } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
+//import { LinkContainer } from 'react-router-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 
 const mapDispatchToProps = dispatch => {
@@ -76,6 +76,14 @@ class ConnectedRecipeForm extends React.Component{
 		})
 	}
 
+	updateRecipe(id, val){
+		return axios.put(`/api/recipe/${id}`, val)
+	}
+
+	addRecipe(val){
+		return axios.post('/api/recipe', val)
+	}
+
 	handleSubmit(e){
 		e.preventDefault();
 
@@ -89,22 +97,26 @@ class ConnectedRecipeForm extends React.Component{
 			isLoading: true
 		})
 
-		axios.post('/api/recipe', {
+		
+		const value = {
 			title,
 			ingredients,
 			description: description || ""
-		}).then(res => {
-			console.log(res);
-			this.setState({
-				toRedirect: true
-			})
-		})
+		}
 
-		this.setState({
-			title: "",
-			ingredients: [],
-			newIngredient: ""
-		})
+		if(this.props.update){
+			this.updateRecipe(this.props.id, value).then(res => {
+				this.setState({
+					toRedirect: true
+				})
+			});
+		} else {
+			this.addRecipe(value).then( res => {
+				this.setState({
+					toRedirect: true
+				})
+			})
+		}
 	}
 
 	addIngredient(e){
@@ -179,7 +191,7 @@ class ConnectedRecipeForm extends React.Component{
 				</form>
 				<Button onClick={this.addIngredient}>Add Ingredient</Button>
 				<div className="AddButton">
-					<Button onClick={this.handleSubmit}>Add Recipe</Button>				
+					<Button onClick={this.handleSubmit}>{this.props.update ? "Update" : "Add"} Recipe</Button>				
 				</div>
 			</div>
 		)

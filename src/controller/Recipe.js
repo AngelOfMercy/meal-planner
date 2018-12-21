@@ -2,6 +2,40 @@ const moment = require('moment');
 const uuidv4 = require('uuid/v4');
 const db = require('../db');
 
+
+async function addIngredients(id, items){
+
+	const now = moment(new Date());
+
+
+	//const query = `UPDATE ingredient SET recipe_id=$1`
+
+	const clearQuery = `DELETE FROM ingredient WHERE recipe_id=$1`;
+
+
+	const {rows} = await db.query(clearQuery, [id]);
+
+	console.log(rows);
+
+	const query = `INSERT INTO
+			ingredient(recipe_id, name, created_date, modified_date)
+			VALUES ($1, $2, $3, $4)` ;
+	
+	for (let i = 0; i < items.length; i++){
+		let itemValue = [
+			id,
+			items[i].name,
+			now,
+			now
+		];
+
+		
+
+		db.query(query, itemValue)
+	}
+		
+}
+
 const Recipe = {
 	async create(req, res) {
 
@@ -13,9 +47,7 @@ const Recipe = {
 			recipe(id, title, description, created_date, modified_date)
 			VALUES($1, $2, $3, $4, $5)
 			returning *`;
-		const ingredientsQuery = `INSERT INTO
-			ingredient(recipe_id, name, created_date, modified_date)
-			VALUES ($1, $2, $3, $4)`;
+		
 
 		const values = [
 			recipeId,
@@ -27,15 +59,9 @@ const Recipe = {
 
 		try {
 			const { rows } = await db.query(query, values);
-			for (let i = 0; i < req.body.ingredients.length; i++){
-				let itemValue = [
-					recipeId,
-					req.body.ingredients[i].name,
-					now,
-					now
-				];
-				await db.query(ingredientsQuery, itemValue)
-			}
+
+			await addIngredient(recipeId, req.body.ingredients);
+			
 			return res.status(201).send(rows[0]);
 		} catch (err) {
 			console.log(err);
@@ -85,36 +111,36 @@ const Recipe = {
 			return res.status(400).send(err);
 		}
 	},
-	async getShoppingList (req, res){
-		const recipies = req.body.recipe;
+	// async getShoppingList (req, res){
+	// 	const recipies = req.body.recipe;
 
-		console.log(req.body.recipies);
+	// 	console.log(req.body.recipies);
 
-		let findShoppingList = 'SELECT DISTINCT name FROM ingredient WHERE ' +
-			recipies.map((item, index) => {
-			return `recipe_id = $${index+1}`
-		}).join(' AND ');
+	// 	let findShoppingList = 'SELECT DISTINCT name FROM ingredient WHERE ' +
+	// 		recipies.map((item, index) => {
+	// 		return `recipe_id = $${index+1}`
+	// 	}).join(' AND ');
 
-		console.log(findShoppingList);
+	// 	console.log(findShoppingList);
 
-		// const value = recipies.map((item) => {
-		// 	return item.id;
-		// })
+	// 	// const value = recipies.map((item) => {
+	// 	// 	return item.id;
+	// 	// })
 
-		// console.log(value);
+	// 	// console.log(value);
 
-		console.log(recipies);
-		try{
-			const { rows } = await db.query(findShoppingList, recipies);
+	// 	console.log(recipies);
+	// 	try{
+	// 		const { rows } = await db.query(findShoppingList, recipies);
 
-			return res.status(200).send(rows);
-		} catch (err) {
-			return res.status(400).send(err);
-		}
-	},
+	// 		return res.status(200).send(rows);
+	// 	} catch (err) {
+	// 		return res.status(400).send(err);
+	// 	}
+	// },
 	async update(req, res) {
 		const findOneQuery = 'SELECT * FROM recipe WHERE id=$1';
-		const updateOneQuery = 'UPDATE recipe SET title=$1, modified=$2 WHERE id=$3 returning *';
+		const updateOneQuery = 'UPDATE recipe SET title=$1, description=$2, modified_date=$3 WHERE id=$4 returning *';
 
 		try {
 			const { rows } = await db.query(findOneQuery, [req.params.id]);
@@ -125,13 +151,18 @@ const Recipe = {
 			}
 			const values = [
 				req.body.title || rows[0].title,
-				moment(new Date())
+				req.body.description || rows[0].description,
+				moment(new Date()),
+				req.params.id
 			]
 
 			const response = await db.query(updateOneQuery, values);
 
+			await addIngredients(req.params.id, req.body.ingredients);
+
 			return res.status(200).send(response.rows[0]);
 		} catch(err) {
+			console.log(err);
 			return res.status(400).send(err);
 		}
 	},

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-import {Grid, Row, Col, Button} from 'react-bootstrap';
+import {Grid, Row, Button} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
