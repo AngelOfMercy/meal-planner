@@ -2,7 +2,6 @@ import React from 'react';
 
 import Planner from './planner/DailyPlanner';
 import Shopping from './planner/ShoppingList';
-import RecipeForm from './recipes/RecipeForm';
 
 import {Grid, Row, Col} from 'react-bootstrap';
 
