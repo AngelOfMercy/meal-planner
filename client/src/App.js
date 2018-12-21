@@ -34,7 +34,7 @@ class App extends Component {
             </Navbar.Header>
 
             <Nav>
-            <LinkContainer to="/recipe">
+            <LinkContainer to="/recipe/list">
               <NavItem>Recipes</NavItem>
             </LinkContainer>
 
@@ -45,7 +45,7 @@ class App extends Component {
 
             </Nav>
           </Navbar>
-          <Grid>
+          <Grid className="AppContent">
             <Switch>
               <Route exact path="/" component={PlannerContainer}/>
               <Route path="/recipe" component={RecipeContainer}/>

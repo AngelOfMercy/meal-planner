@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Grid, Row} from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { } from 'react-bootstrap';
+import { Route, Switch } from 'react-router-dom';
 
 import RecipeForm from './recipes/RecipeForm';
 import RecipeList from './recipes/RecipeList';
@@ -17,7 +17,7 @@ export default class RecipeContainer extends React.Component {
 				<Switch>
 
 					<Route exact path={`${this.props.match.path}/add`} component={RecipeForm}/>
-					<Route exact path={this.props.path} component={RecipeList}/>
+					<Route exact path={`${this.props.match.path}/list`} component={RecipeList}/>
 
 				</Switch>
 
