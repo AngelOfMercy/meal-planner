@@ -141,14 +141,14 @@ const Recipe = {
 
 		try {
 			const {rows} = await db.query(findOneQuery, [req.params.id]);
-
 			if(!rows[0]){
+				
 				return res.status(404).send({
 					message: "No recipe could be found"
 				})
 			}
 
-			const response = await db.query(deleteQuery, [req.params.id]);
+			await db.query(deleteQuery, [req.params.id]);
 
 			return res.status(201).send({
 				message: "Recipe deleted",
@@ -160,10 +160,6 @@ const Recipe = {
 		} catch (err) {
 			return res.status(400).send(err);
 		}
-
-		return res.status(501).send({
-			message: 'Not implemented yet'
-		})
 	}
 }
 
