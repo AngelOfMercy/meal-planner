@@ -56,10 +56,10 @@ const Recipe = {
 		}
 	},
 	async getOne(req, res) {
-		const findOneQuery = 'SELECT * FROM recipe WHERE id = $1';
+		const findOneQuery = 'SELECT * FROM recipe WHERE id=$1';
 		try {
-			const { rows } = await db.query(findOneQuery);
-
+			const { rows } = await db.query(findOneQuery, [req.params.id]);
+			console.log(rows);
 			if(!rows[0]){
 				res.status(404).send({
 					message: 'Recipe not found'

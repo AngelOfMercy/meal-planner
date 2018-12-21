@@ -45,10 +45,9 @@ class ConnectedShoppingList extends React.Component{
 					Shopping List
 				</h2>
 				<ul>
-				{console.log(this.getShoppingList())}
 				{this.getShoppingList().map(item => {
 					return (
-						<li>
+						<li key={item.name}>
 							{item.name}
 						</li>
 					)

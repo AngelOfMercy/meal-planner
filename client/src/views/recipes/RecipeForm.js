@@ -7,8 +7,9 @@ import { addRecipe } from '../../js/actions/index';
 
 import _ from 'lodash';
 import axios from 'axios';
-import { FormGroup, ControlLabel, FormControl, Button, ListGroup, ListGroupItem, Grid, Col, Row } from 'react-bootstrap';
-
+import { FormGroup, ControlLabel, FormControl, Button, ListGroup, ListGroupItem, Col, Row } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Link, Redirect } from 'react-router-dom';
 
 
 const mapDispatchToProps = dispatch => {
@@ -23,22 +24,21 @@ const mapStateToProps = state => {
 	}
 }
 
-const defaultState = {
-	title: "",
-	ingredients: [],
-	newIngredient: ""
-}
-
 class ConnectedRecipeForm extends React.Component{
 
 	constructor(props){
 		super(props);
 
 		this.state = {
-			...defaultState,
+			title: "",
+			ingredients: [],
+			newIngredient: "",
 			isValid: {
 				title: null
 			},
+			redirect: props.redirect || '/recipe/list',
+			toRedirect: false,
+			isLoading: props.update || false
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -46,6 +46,28 @@ class ConnectedRecipeForm extends React.Component{
 
 		this.addIngredient = this.addIngredient.bind(this);
 		this.removeIngredient = this.removeIngredient.bind(this);
+
+		this.renderForm = this.renderForm.bind(this);
+	}
+
+	async componentWillMount(){
+		console.log('Will mount Form')
+		if(this.props.update){
+			console.log('Prop', this.props)
+			axios.get(`/api/recipe/${this.props.id}`).then(recipe => {
+				axios.get(`/api/recipe/${this.props.id}/ingredients`).then(items => {
+					console.log(items.data);
+					this.setState({
+						...recipe.data,
+						isLoading:false,
+						ingredients: items.data
+					})
+				})
+			});
+
+
+
+		}
 	}
 
 	handleChange(e){
@@ -57,15 +79,15 @@ class ConnectedRecipeForm extends React.Component{
 	handleSubmit(e){
 		e.preventDefault();
 
-		const existing = _.map(this.props.recipe, (recipe) => {
-			return recipe.title;
-		})
-
 		const { title, ingredients, description } = this.state;
 
-		if(_.includes(existing, title) && title !== ""){
-			return
+		if(title === "" || ingredients.length <= 0){
+			return; //TODO: Create and handle an error?
 		}
+
+		this.setState({
+			isLoading: true
+		})
 
 		axios.post('/api/recipe', {
 			title,
@@ -73,10 +95,15 @@ class ConnectedRecipeForm extends React.Component{
 			description: description || ""
 		}).then(res => {
 			console.log(res);
+			this.setState({
+				toRedirect: true
+			})
 		})
 
 		this.setState({
-			...defaultState
+			title: "",
+			ingredients: [],
+			newIngredient: ""
 		})
 	}
 
@@ -113,9 +140,9 @@ class ConnectedRecipeForm extends React.Component{
 		}
 	}
 
-	render(){
+	renderForm(){
 		return (
-			<div className="RecipeForm">
+			<div>
 				<form>
 					<FormGroup controlId="title" validationState={this.getValidity("title")}>
 						<ControlLabel>Recipe Name</ControlLabel>
@@ -152,11 +179,29 @@ class ConnectedRecipeForm extends React.Component{
 				</form>
 				<Button onClick={this.addIngredient}>Add Ingredient</Button>
 				<div className="AddButton">
-					<Button onClick={this.handleSubmit}>Add Recipe</Button>
+					<Button onClick={this.handleSubmit}>Add Recipe</Button>				
 				</div>
-
 			</div>
-		);
+		)
+	}
+
+	render(){
+
+		if(this.state.toRedirect){
+			return (
+				<Redirect to={this.state.redirect}/>
+			)
+		}
+
+		if(this.state.isLoading){
+			return (
+				<div>
+					Processing
+				</div>
+			)
+		}
+
+		return this.renderForm()
 	}
 
 }
