@@ -7,6 +7,11 @@ body {
  color: #393E41;
 }
 
+.AppContent {
+	background: #FFFFFF;
+	padding:24px;
+}
+
 .form-control {
   background: #D3D0CB
 }
