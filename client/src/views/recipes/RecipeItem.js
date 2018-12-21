@@ -2,10 +2,18 @@ import React from 'react';
 import './RecipeItem.css'
 import {Grid, Row, Col, Button} from 'react-bootstrap';
 
+import axios from 'axios';
+
 export default class RecipeItem extends React.Component {
 	constructor(props){
 		super(props);
 
+		this.handleDelete = this.handleDelete.bind(this);
+	}
+
+	handleDelete(e){
+		axios.delete(`/api/recipe/${this.props.recipe.id}`);
+		this.props.delete(this.props.recipe.id);
 	}
 
 	render(){
@@ -18,10 +26,10 @@ export default class RecipeItem extends React.Component {
 					</Col>
 					<Col className="float-right">
 						<div className="float-right">
-							<Button>Hi</Button>
-						hi
+							<Button onClick={this.handleDelete}>
+								Delete
+							</Button>
 						</div>
-						Delete
 					</Col>
 				</Row>
 				<Row>

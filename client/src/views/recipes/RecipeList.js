@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash';
+
 import {Grid, Row, Col, Button} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -15,6 +17,8 @@ class RecipeList extends React.Component {
 			recipe:[],
 			isLoading: true
 		}
+
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	componentWillMount(){
@@ -24,6 +28,15 @@ class RecipeList extends React.Component {
 				isLoading: false
 			});
 		})
+	}
+
+	handleDelete(id){
+		const removed = _.remove(this.state.recipe, item => {
+				return item.id !== id;
+		})
+		this.setState({
+			recipe: removed
+		});
 	}
 
 	render(){
@@ -38,7 +51,9 @@ class RecipeList extends React.Component {
 					{this.state.recipe.map(item => {
 						return (
 							<ListGroupItem key={item.id} >
-								<RecipeItem recipe={item}/>
+								<RecipeItem 
+									recipe={item}
+									delete={this.handleDelete}/>
 							</ListGroupItem>
 						)
 					})}
