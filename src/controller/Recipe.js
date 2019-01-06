@@ -1,39 +1,47 @@
 const moment = require('moment');
 const uuidv4 = require('uuid/v4');
 const db = require('../db');
+const _ = require('lodash');
 
 
 async function addIngredients(id, items){
 
-	const now = moment(new Date());
+	const now = moment(new Date()).format();
+
+	const itemList = _.map(items, (item) => {
+		return `'${item.name}'`;
+	}).join();//join(items);
 
 
-	//const query = `UPDATE ingredient SET recipe_id=$1`
+	const {rows} = await db.query(`SELECT * FROM ingredient WHERE recipe_id='${id}' AND name IN (${itemList})`);
 
-	const clearQuery = `DELETE FROM ingredient WHERE recipe_id=$1`;
+	const existing = rows;
 
+	//We don't delete anything that we are not needing to get rid of.
+	const clearQuery = `DELETE FROM ingredient WHERE recipe_id='${id}' AND name NOT IN (${itemList});`;
 
-	const {rows} = await db.query(clearQuery, [id]);
+	var query = clearQuery;
 
-	console.log(rows);
-
-	const query = `INSERT INTO
-			ingredient(recipe_id, name, created_date, modified_date)
-			VALUES ($1, $2, $3, $4)` ;
-	
 	for (let i = 0; i < items.length; i++){
-		let itemValue = [
-			id,
-			items[i].name,
-			now,
-			now
-		];
 
-		
+		const name = items[i].name;
 
-		db.query(query, itemValue)
+		console.log(name, );
+
+		if(!_.includes(_.map(existing, 'name'), name)){
+			query += `INSERT INTO
+			ingredient(recipe_id, name, created_date, modified_date)
+			VALUES ('${id}', '${name}', '${now}', '${now}');` ;
+		}
 	}
-		
+
+	console.log(query)
+	db.query(query).then(res => {
+		//console.log(res);
+	}).catch(err => {
+		console.error(err)
+	})
+
 }
 
 const Recipe = {
@@ -47,7 +55,7 @@ const Recipe = {
 			recipe(id, title, description, created_date, modified_date)
 			VALUES($1, $2, $3, $4, $5)
 			returning *`;
-		
+
 
 		const values = [
 			recipeId,
@@ -61,7 +69,7 @@ const Recipe = {
 			const { rows } = await db.query(query, values);
 
 			await addIngredient(recipeId, req.body.ingredients);
-			
+
 			return res.status(201).send(rows[0]);
 		} catch (err) {
 			console.log(err);
@@ -173,7 +181,7 @@ const Recipe = {
 		try {
 			const {rows} = await db.query(findOneQuery, [req.params.id]);
 			if(!rows[0]){
-				
+
 				return res.status(404).send({
 					message: "No recipe could be found"
 				})

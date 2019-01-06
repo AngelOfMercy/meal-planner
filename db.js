@@ -11,9 +11,6 @@ pool.on('connect', () => {
 	console.log('Connected to the Database');
 });
 
-function query(query){
-
-}
 
 const createRecipeTable = () => {
 	const queryText = `
