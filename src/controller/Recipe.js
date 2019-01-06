@@ -25,9 +25,6 @@ async function addIngredients(id, items){
 	for (let i = 0; i < items.length; i++){
 
 		const name = items[i].name;
-
-		console.log(name, );
-
 		if(!_.includes(_.map(existing, 'name'), name)){
 			query += `INSERT INTO
 			ingredient(recipe_id, name, created_date, modified_date)
@@ -35,7 +32,6 @@ async function addIngredients(id, items){
 		}
 	}
 
-	console.log(query)
 	db.query(query).then(res => {
 		//console.log(res);
 	}).catch(err => {
@@ -68,7 +64,7 @@ const Recipe = {
 		try {
 			const { rows } = await db.query(query, values);
 
-			await addIngredient(recipeId, req.body.ingredients);
+			await addIngredients(recipeId, req.body.ingredients);
 
 			return res.status(201).send(rows[0]);
 		} catch (err) {
