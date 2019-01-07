@@ -4,7 +4,7 @@ const db = require('../db');
 const _ = require('lodash');
 
 
-async function addIngredients(id, items){
+async function updateIngredients(id, items){
 
 	const now = moment(new Date()).format();
 
@@ -64,7 +64,7 @@ const Recipe = {
 		try {
 			const { rows } = await db.query(query, values);
 
-			await addIngredients(recipeId, req.body.ingredients);
+			await updateIngredients(recipeId, req.body.ingredients);
 
 			return res.status(201).send(rows[0]);
 		} catch (err) {
@@ -162,7 +162,7 @@ const Recipe = {
 
 			const response = await db.query(updateOneQuery, values);
 
-			await addIngredients(req.params.id, req.body.ingredients);
+			await updateIngredients(req.params.id, req.body.ingredients);
 
 			return res.status(200).send(response.rows[0]);
 		} catch(err) {
